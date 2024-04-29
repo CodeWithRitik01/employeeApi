@@ -7,11 +7,12 @@ import { connect } from "./config.js";
 const app = express();
 
 const PORT = 4100;
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors());
-app.use("/api/employee", employeeRouter);
+app.use('/api/employee', employeeRouter);
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 app.get("/", (req, res)=>{

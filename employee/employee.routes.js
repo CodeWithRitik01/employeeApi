@@ -1,18 +1,22 @@
 import express from "express";
 import EmployeeController from "./emplyee.controller.js";
+import  uploadss  from "../middlewares/fileupload.middleware.js";
 
 const employeeRouter = express.Router();
 
 const employeeController = new EmployeeController();
 
-employeeRouter.post(
-    '/addemployee',
-    employeeController.addEmployee
-)
+
 
 employeeRouter.get(
     '/getEmp',
     employeeController.getEmployees
+)
+
+employeeRouter.post(
+    '/addemployee',
+    uploadss.single('imageUrl'),
+    employeeController.addEmployee
 )
 
 employeeRouter.delete(

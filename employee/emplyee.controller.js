@@ -2,16 +2,23 @@ import { employeeModel } from "../emplyeeSchema.js";
 
 export default class EmployeeController{
       async addEmployee(req, res){
-      const {name, salary, department} = req.body;
-        const newEmployee = await new  employeeModel({
-            name: name,
-            salary: salary,
-            department:department,
-        })
-        console.log(newEmployee ,"yup");
-     
-        await newEmployee.save();
-      res.send("working");
+        try{
+            const {name, salary, department,imageUrl} = req.body;
+            console.log(req.file.filename ,"chan")
+              const newEmployee = await new  employeeModel({
+                  name: name,
+                  salary: salary,
+                  department:department,
+                  imageUrl:req.file.filename
+              })
+              console.log(newEmployee ,"yup");
+           
+              await newEmployee.save();
+              res.send("working");
+        }catch(err){
+            console.log(err)
+        }
+   
      }
 
      async getEmployees(req, res){
@@ -21,12 +28,14 @@ export default class EmployeeController{
             id:emp.id,
             name: emp.name,
             salary: emp.salary,
-            department: emp.department
+            department: emp.department,
+            imageUrl:emp.imageUrl
 
         }));
         res.json(employeeData); 
     } catch (error) {
         res.status(500).json({ error: error.message });
+        console.log(error)
     }
      }
 
